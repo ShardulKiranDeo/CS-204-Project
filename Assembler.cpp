@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include <unordered_map>
 using namespace std;
 
@@ -39,6 +39,8 @@ unordered_map<string,string> opcode = {
 
 int main()
 {
+ //taking input through a file
 
+ // string parsing
   return 0;
 }
