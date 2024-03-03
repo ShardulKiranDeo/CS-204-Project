@@ -1,6 +1,4 @@
-#include <iostream>
-#include <unordered_map>
-#include <fstream>
+#include<bits/stdc++.h>
 using namespace std;
 
 unordered_map<string,string> opcode = {
@@ -72,6 +70,53 @@ unordered_map<string,string> registers={
  {"x30","11110"},
  {"x31","11111"}
 };
+
+unordered_map <string,string> funct3 = {
+  {"add","000"},
+ {"and","111"},
+ {"or","110"},
+ {"sll","001"},
+ {"slt","010"},
+ {"sra","101"},
+ {"srl","101"},
+ {"sub","000"},
+ {"xor","100"},
+ {"mul",""},
+ {"div",""},
+ {"rem",""},
+ {"addi","000"},
+ {"andi","111"},
+ {"ori","110"},
+ {"lb","000"},
+ {"ld","011"},
+ {"lh","001"},
+ {"lw","010"},
+ {"jalr","000"},
+ {"sb","000"},
+ {"sw","010"},
+ {"sd","011"},
+ {"sh","001"},
+ {"beq","000"},
+ {"bne","001"},
+ {"bge","101"},
+ {"blt","100"},
+//  {"auipc",""},
+//  {"lui","0110111"},
+//  {"jal","1101111"}
+
+}
+unordered_map <string,string> funct7={
+  {"add","0000000"},
+ {"and","0000000"},
+ {"or","0000000"},
+ {"sll","0000000"},
+ {"slt","0000000"},
+ {"sra","0100000"},
+ {"srl","0000000"},
+ {"sub","0100000"},
+ {"xor","0000000"},
+
+}
 
 void Rformat() //For R format instructions 
 {
