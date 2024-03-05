@@ -81,9 +81,9 @@ unordered_map <string,string> funct3 = {
  {"srl","101"},
  {"sub","000"},
  {"xor","100"},
- // {"mul",""},
- // {"div",""},
- // {"rem",""},
+ {"mul","000"},
+ {"div","100"},
+ {"rem","110"},
  {"addi","000"},
  {"andi","111"},
  {"ori","110"},
@@ -117,6 +117,46 @@ unordered_map <string,string> funct7={
  {"xor","0000000"},
 
 };
+unordered_map <string ,string > ins_type ={
+  {"add","R"},{"and","R"},
+ {"or","R"},{"sll","R"},{"slt","R"},{"sra","R"},{"srl","R"},{"sub","R"},{"xor","R"},{"mul","R"},{"div","R"},{"rem","R"},
+ {"addi","I"},{"andi","I"},{"ori","I"},{"lb","I"},{"ld","I"},{"lh","I"},{"lw","I"},{"jalr","I"},
+ {"sb","S"},{"sw","S"},{"sd","S"},{"sh","S"},
+ {"beq","SB"},{"bne","SB"},{"bge","SB"},{"blt","SB"},
+ {"auipc","U"},{"lui","U"},
+ {"jal","UJ"}
+};
+
+string hex2bin(string &h){
+  string a,b;
+  if(h[0] == '0' && h[1] =='x'){
+    int i=0;
+    while(i<8){
+      switch(h[i+2]){
+        case '0' : a = "0000"; break;
+        case '1' : a = "0001"; break;
+        case '2' : a = "0010"; break;
+        case '3' : a = "0011"; break;
+        case '4' : a = "0100"; break;
+        case '5' : a = "0101"; break;
+        case '6' : a = "0110"; break;
+        case '7' : a = "0111"; break;
+        case '8' : a = "1000"; break;
+        case '9' : a = "1001"; break;
+        case 'a' : case 'A' : a = "1010"; break;
+        case 'b' : case 'B' : a = "1011"; break;
+        case 'c' : case 'C' : a = "1100"; break;
+        case 'd' : case 'D' : a = "1101"; break;
+        case 'e' : case 'E' : a = "1110"; break;
+        case 'f' : case 'F' : a = "1111"; break;   
+      }
+      b+=a;
+       a.clear();
+      i++;
+    }
+  }
+  return b;
+}
 
 void Rformat(string instruction, string rs2, string rs1, string rd) //For R format instructions 
 {
