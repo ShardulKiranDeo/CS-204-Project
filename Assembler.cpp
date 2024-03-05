@@ -144,14 +144,21 @@ void Iformat(string instruction, string immediate, string rs1, string rd) //For 
  
 }
 
-void Sformat(string instruction) //For S format instructions
+void Sformat(string instruction, string rs2, string rs1, string immediate) //For S format instructions
 {
- 
+ string bin = "";
+  bin = bin + immediate[11] + immediate[10] + immediate[9] + immediate[8] + immediate[7] + immediate[6] + immediate[5] ;
+ bin = bin + registers[rs2]; 
+ bin = bin + registers[rs1];
+  bin = bin + funct3[instruction];
+   bin = bin + immediate[4] + immediate[3] + immediate[2] + immediate[1] + immediate[0] ;
+  bin = bin + opcode[instruction];
+  string hex  = bintohex(bin);
  
 }
 
 
-void SBformat(string instruction) //For SB format instructions
+void SBformat(string instruction, string rs2, string rs1, string immediate) //For SB format instructions
 {
  
 }
@@ -187,8 +194,9 @@ void assemble(string inputf, string outputf) //Function to take input and write 
    }
   string line;
    int codeaddress = 0x00000000; //Address of code segment 
-   int dataaddress= 0x10000000; //Address of code segment 
-   int stackaddress = 0x10008000; //Address of code segment 
+   int dataaddress= 0x10000000; //Address of data segment 
+   int heapaddress = 0x10008000; //Address of heap segment
+   int stackaddress = 0x7FFFFFDC; //Address of stack segment
 
     while(getline(infile,line))
      {
