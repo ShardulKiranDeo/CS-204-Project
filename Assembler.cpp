@@ -147,11 +147,11 @@ void Iformat(string instruction, string immediate, string rs1, string rd) //For 
 void Sformat(string instruction, string rs2, string rs1, string immediate) //For S format instructions
 {
  string bin = "";
-  bin = bin + immediate[11] + immediate[10] + immediate[9] + immediate[8] + immediate[7] + immediate[6] + immediate[5] ;
+  bin = bin + immediate[0] + immediate[1] + immediate[2] + immediate[3] + immediate[4] + immediate[5] + immediate[6] ;
  bin = bin + registers[rs2]; 
  bin = bin + registers[rs1];
   bin = bin + funct3[instruction];
-   bin = bin + immediate[4] + immediate[3] + immediate[2] + immediate[1] + immediate[0] ;
+   bin = bin + immediate[7] + immediate[8] + immediate[9] + immediate[10] + immediate[11] ;
   bin = bin + opcode[instruction];
   string hex  = bintohex(bin);
  
@@ -160,7 +160,14 @@ void Sformat(string instruction, string rs2, string rs1, string immediate) //For
 
 void SBformat(string instruction, string rs2, string rs1, string immediate) //For SB format instructions
 {
- 
+ string bin = "";
+  bin = bin + immediate[0] + immediate[1] + immediate[2] + immediate[3] + immediate[4] + immediate[5] + immediate[6] ;
+ bin = bin + registers[rs2]; 
+ bin = bin + registers[rs1];
+  bin = bin + funct3[instruction];
+   bin = bin + immediate[7] + immediate[8] + immediate[9] + immediate[10] + immediate[11] ;
+  bin = bin + opcode[instruction];
+  string hex  = bintohex(bin);
 }
 
 void Uformat(string instruction , string immediate, string rd) //For U format instructions
