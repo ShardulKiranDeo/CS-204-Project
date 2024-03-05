@@ -104,7 +104,7 @@ unordered_map <string,string> funct3 = {
 //  {"lui","0110111"},
 //  {"jal","1101111"}
 
-}
+};
 unordered_map <string,string> funct7={
   {"add","0000000"},
  {"and","0000000"},
@@ -116,41 +116,62 @@ unordered_map <string,string> funct7={
  {"sub","0100000"},
  {"xor","0000000"},
 
-}
+};
 
-void Rformat() //For R format instructions 
+void Rformat(string instruction, string rs2, string rs1, string rd) //For R format instructions 
 {
-
+  string bin = "";
+  bin = bin + funct7[instruction];
+  bin = bin + registers[rs2];
+  bin = bin + registers[rs1];
+  bin = bin + funct3[instruction];
+  bin = bin + registers[rd];
+  bin = bin + opcode[instruction];
+  string hex  = bintohex(bin);
  
 }
 
 
-void Iformat() //For I format instructions
+void Iformat(string instruction, string immediate, string rs1, string rd) //For I format instructions
 {
-
+  string bin = "";
+  bin = bin + immediate;
+  bin = bin + registers[rs1];
+  bin = bin + funct3[instruction];
+  bin = bin + registers[rd];
+  bin = bin + opcode[instruction];
+  string hex  = bintohex(bin);
  
 }
 
-void Sformat() //For I format instructions
+void Sformat(string instruction) //For S format instructions
 {
-
+ 
  
 }
 
 
-void SBformat() //For SB format instructions
+void SBformat(string instruction) //For SB format instructions
 {
  
 }
 
-void Uformat() //For U format instructions
+void Uformat(string instruction , string immediate, string rd) //For U format instructions
 {
- 
+  string bin = "";
+  bin = bin + immediate;
+  bin = bin + registers[rd];
+  bin = bin + opcode[instruction];
+  string hex  = bintohex(bin);
 }
 
-void UJformat() //For UJ format instructions
+void UJformat(string instruction , string immediate, string rd) //For UJ format instructions
 {
- 
+ string bin = "";
+  bin = bin + immediate;
+  bin = bin + registers[rd];
+  bin = bin + opcode[instruction];
+  string hex  = bintohex(bin);
 }
 
 
@@ -164,7 +185,16 @@ void assemble(string inputf, string outputf) //Function to take input and write 
      cout<<"Error opening files"<<endl;
      return ;
    }
+  string line;
+   int codeaddress = 0x00000000; //Address of code segment 
+   int dataaddress= 0x10000000; //Address of code segment 
+   int stackaddress = 0x10008000; //Address of code segment 
 
+    while(getline(infile,line))
+     {
+       
+      
+     }
    
 }
 
