@@ -100,9 +100,7 @@ unordered_map <string,string> funct3 = {
  {"bne","001"},
  {"bge","101"},
  {"blt","100"},
-//  {"auipc",""},
-//  {"lui","0110111"},
-//  {"jal","1101111"}
+
 
 };
 unordered_map <string,string> funct7={
@@ -247,9 +245,58 @@ void assemble(string inputf, string outputf) //Function to take input and write 
 
     while(getline(infile,line))
      {
+      line = regex_replace(line, regex("^\\s+|\\s+$"),"");//Removing spaces leading or trailing 
+      line = regex_replace(line, regex(",")," ");//Removing commas
+
+      if(line.empty())
+       {continue;}
        
+      if(line[0]=='.') // Prakhar add the code to handle directives
+      {}
+ 
+
+       istringstream iss(line);
+       vector<string> tokens;
+      for(string token; iss>>token;)
+       {
+        tokens.push_back(token);
+       }
+      
+      string inst = ins_type[tokens[0]];
+
+      if(inst=="R")
+      {
+        Rformat(tokens[0], registers[tokens[3]],registers[tokens[2]],registers[tokens[1]]);
+      }
+      else if(inst=="I")
+            {
+                Iformat(tokens[0], hex2bin(tokens[3]),registers[tokens[2]],registers[tokens[1]]);
+            }
+            else if(inst=="S")
+                  {
+                    Sformat(tokens[0], registers[tokens[1]],registers[tokens[3]], hex2bin(tokens[2]));
+                  }
+                  else if(inst=="SB")
+                        {
+                           SBformat(tokens[0], registers[tokens[2]],registers[tokens[1]], hex2bin(tokens[1]));
+                        }
+                        else if(inst=="U")
+                              {
+                                 Uformat(tokens[0], hex2bin(tokens[2]),registers[tokens[1]]);
+                              }
+                              else if(inst=="UJ")
+                                    {
+                                       
+                                       UJformat(tokens[0], hex2bin(tokens[2]),registers[tokens[1]]);
+                                    }
+                                    else
+                                    {break;}
+
       
      }
+
+ infile.close();
+ outfile.close();
    
 }
 
@@ -259,4 +306,5 @@ assemble("input.asm", "output.mc");
 
   return 0;
 }
+
 
