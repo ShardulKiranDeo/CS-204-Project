@@ -333,7 +333,7 @@ void assemble(string inputf, string outputf) //Function to take input and write 
 
       
      }
-
+  outfile <<"0x"<<hex<<codeaddress<< "End of program"<<endl;
  infile.close();
  outfile.close();
    
