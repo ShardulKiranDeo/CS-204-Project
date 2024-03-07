@@ -156,6 +156,19 @@ string hex2bin(string &h){
   return b;
 }
 
+string bintohex(string &s){
+  bitset<32>bintohex(s);
+  unsigned int intValue = bintohex.to_ulong();
+  stringstream hexStream;
+  hexStream<<hex<<intValue;
+  string hexString = hexStream.str();
+   int l = 8 - hexString.length();
+  string b(l,'0');
+  b+=hexString;
+  b.insert(0,"0x");
+  return b;
+}
+
 void Rformat(string instruction, string rs2, string rs1, string rd) //For R format instructions 
 {
   string bin = "";
