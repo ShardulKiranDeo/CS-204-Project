@@ -159,6 +159,33 @@ string hex2bin(string &h, int length){
   return b;
 }
 
+int power(int a){
+  if(a==0){
+    return 1;
+  }
+  return 10*power(a-1);
+}
+
+string dec2bin(string &h,int l){
+  string a;
+  int i=0;
+  int sum = 0;
+  while(i<l){
+    char a = h[l-i-1];
+    int b = a-'0';
+    sum+= power(i)*b;
+    i++;
+  }
+  while(sum>0){
+    int rem = sum%2;
+    sum = sum/2;
+    char c = rem + '0';
+    a += c;
+  }
+ reverse(a.begin(),a.end());
+return a;
+}
+
 string bintohex(string &s){
   bitset<32>bintohex(s);
   unsigned int intValue = bintohex.to_ulong();
