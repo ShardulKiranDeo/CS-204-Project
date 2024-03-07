@@ -1,4 +1,4 @@
- #include<bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 unordered_map<string,string> opcode = {
@@ -201,6 +201,7 @@ string Iformat(string instruction, string immediate, string rs1, string rd) //Fo
   bin = bin + funct3[instruction];
   bin = bin + rd;
   bin = bin + opcode[instruction];
+  cout<<bin<<endl;
   string hex  = bintohex(bin);
  return hex;
 }
@@ -292,26 +293,25 @@ void assemble(string inputf, string outputf) //Function to take input and write 
       if(inst=="R")
       {
         machinecode = Rformat(tokens[0], registers[tokens[3]],registers[tokens[2]],registers[tokens[1]]);
-        
-       
         outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
         codeaddress += 4;  
       }
       else if(inst=="I")
             {
-               machinecode =  Iformat(tokens[0], hex2bin(tokens[3], 12),registers[tokens[2]],registers[tokens[1]]);
+               machinecode =  Iformat(tokens[0], dec2bin(tokens[3], 12),registers[tokens[2]],registers[tokens[1]]);
+               
               outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
               codeaddress += 4; 
             }
             else if(inst=="S")
                   {
-                    machinecode =  Sformat(tokens[0], registers[tokens[1]],registers[tokens[3]], hex2bin(tokens[2],12));
+                    machinecode =  Sformat(tokens[0], registers[tokens[1]],registers[tokens[3]], dec2bin(tokens[2],12));
                     outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
                     codeaddress += 4; 
                   }
                   else if(inst=="SB")
                         {
-                          machinecode =  SBformat(tokens[0], registers[tokens[2]],registers[tokens[1]], hex2bin(tokens[1],12));
+                          machinecode =  SBformat(tokens[0], registers[tokens[2]],registers[tokens[1]], dec2bin(tokens[1],12));
                           outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
                           codeaddress += 4; 
                         }
@@ -345,5 +345,3 @@ assemble("input.asm", "output.mc");
 
   return 0;
 }
-
-
