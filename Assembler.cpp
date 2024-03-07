@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+ #include<bits/stdc++.h>
 using namespace std;
 
 unordered_map<string,string> opcode = {
@@ -333,7 +333,7 @@ void assemble(string inputf, string outputf) //Function to take input and write 
 
       
      }
-  outfile <<"0x"<<hex<<codeaddress<< "End of program"<<endl;
+  outfile <<"0x"<<hex<<codeaddress<< " End of program"<<endl;
  infile.close();
  outfile.close();
    
