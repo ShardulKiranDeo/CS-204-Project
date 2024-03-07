@@ -125,12 +125,12 @@ unordered_map <string ,string > ins_type ={
  {"jal","UJ"}
 };
 
-string hex2bin(string &h){
+string hex2bin(string &h, int length){
   string a,b;
-  if(h[0] == '0' && h[1] =='x'){
+  
     int i=0;
     while(i<8){
-      switch(h[i+2]){
+      switch(h[i]){
         case '0' : a = "0000"; break;
         case '1' : a = "0001"; break;
         case '2' : a = "0010"; break;
@@ -149,10 +149,13 @@ string hex2bin(string &h){
         case 'f' : case 'F' : a = "1111"; break;   
       }
       b+=a;
+      
        a.clear();
       i++;
-    }
+    
   }
+  while(b.size()<length)
+      {b = "0" + b;}
   return b;
 }
 
@@ -169,74 +172,84 @@ string bintohex(string &s){
   return b;
 }
 
-void Rformat(string instruction, string rs2, string rs1, string rd) //For R format instructions 
+ int codeaddress = 0x00000000; //Address of code segment 
+   int dataaddress= 0x10000000; //Address of data segment 
+   int heapaddress = 0x10008000; //Address of heap segment
+   int stackaddress = 0x7FFFFFDC; //Address of stack segment
+
+string Rformat(string instruction, string rs2, string rs1, string rd) //For R format instructions 
 {
   string bin = "";
   bin = bin + funct7[instruction];
-  bin = bin + registers[rs2];
-  bin = bin + registers[rs1];
+  bin = bin + rs2;
+  
+  bin = bin + rs1;
   bin = bin + funct3[instruction];
-  bin = bin + registers[rd];
+  bin = bin + rd;
   bin = bin + opcode[instruction];
-  string hex  = bintohex(bin);
  
+  string hex  = bintohex(bin);
+  return hex;
 }
 
 
-void Iformat(string instruction, string immediate, string rs1, string rd) //For I format instructions
+string Iformat(string instruction, string immediate, string rs1, string rd) //For I format instructions
 {
   string bin = "";
   bin = bin + immediate;
-  bin = bin + registers[rs1];
+  bin = bin + rs1;
   bin = bin + funct3[instruction];
-  bin = bin + registers[rd];
+  bin = bin + rd;
   bin = bin + opcode[instruction];
   string hex  = bintohex(bin);
- 
+ return hex;
 }
 
-void Sformat(string instruction, string rs2, string rs1, string immediate) //For S format instructions
+string Sformat(string instruction, string rs2, string rs1, string immediate) //For S format instructions
 {
  string bin = "";
   bin = bin + immediate[0] + immediate[1] + immediate[2] + immediate[3] + immediate[4] + immediate[5] + immediate[6] ;
- bin = bin + registers[rs2]; 
- bin = bin + registers[rs1];
+ bin = bin + rs2; 
+ bin = bin + rs1;
   bin = bin + funct3[instruction];
    bin = bin + immediate[7] + immediate[8] + immediate[9] + immediate[10] + immediate[11] ;
   bin = bin + opcode[instruction];
   string hex  = bintohex(bin);
- 
+ return hex;
 }
 
 
-void SBformat(string instruction, string rs2, string rs1, string immediate) //For SB format instructions
+string SBformat(string instruction, string rs2, string rs1, string immediate) //For SB format instructions
 {
  string bin = "";
   bin = bin + immediate[0] + immediate[1] + immediate[2] + immediate[3] + immediate[4] + immediate[5] + immediate[6] ;
- bin = bin + registers[rs2]; 
- bin = bin + registers[rs1];
+ bin = bin + rs2; 
+ bin = bin + rs1;
   bin = bin + funct3[instruction];
    bin = bin + immediate[7] + immediate[8] + immediate[9] + immediate[10] + immediate[11] ;
   bin = bin + opcode[instruction];
   string hex  = bintohex(bin);
+  return hex;
 }
 
-void Uformat(string instruction , string immediate, string rd) //For U format instructions
+string Uformat(string instruction , string immediate, string rd) //For U format instructions
 {
   string bin = "";
   bin = bin + immediate;
-  bin = bin + registers[rd];
+  bin = bin + rd;
   bin = bin + opcode[instruction];
   string hex  = bintohex(bin);
+  return hex;
 }
 
-void UJformat(string instruction , string immediate, string rd) //For UJ format instructions
+string UJformat(string instruction , string immediate, string rd) //For UJ format instructions
 {
  string bin = "";
   bin = bin + immediate;
-  bin = bin + registers[rd];
+  bin = bin + rd;
   bin = bin + opcode[instruction];
   string hex  = bintohex(bin);
+  return hex;
 }
 
 
@@ -251,10 +264,7 @@ void assemble(string inputf, string outputf) //Function to take input and write 
      return ;
    }
   string line;
-   int codeaddress = 0x00000000; //Address of code segment 
-   int dataaddress= 0x10000000; //Address of data segment 
-   int heapaddress = 0x10008000; //Address of heap segment
-   int stackaddress = 0x7FFFFFDC; //Address of stack segment
+  
 
     while(getline(infile,line))
      {
@@ -275,32 +285,48 @@ void assemble(string inputf, string outputf) //Function to take input and write 
         tokens.push_back(token);
        }
       
-      string inst = ins_type[tokens[0]];
+       
 
+      string inst = ins_type[tokens[0]];
+      string machinecode;
       if(inst=="R")
       {
-        Rformat(tokens[0], registers[tokens[3]],registers[tokens[2]],registers[tokens[1]]);
+        machinecode = Rformat(tokens[0], registers[tokens[3]],registers[tokens[2]],registers[tokens[1]]);
+        
+       
+        outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
+        codeaddress += 4;  
       }
       else if(inst=="I")
             {
-                Iformat(tokens[0], hex2bin(tokens[3]),registers[tokens[2]],registers[tokens[1]]);
+               machinecode =  Iformat(tokens[0], hex2bin(tokens[3], 12),registers[tokens[2]],registers[tokens[1]]);
+              outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
+              codeaddress += 4; 
             }
             else if(inst=="S")
                   {
-                    Sformat(tokens[0], registers[tokens[1]],registers[tokens[3]], hex2bin(tokens[2]));
+                    machinecode =  Sformat(tokens[0], registers[tokens[1]],registers[tokens[3]], hex2bin(tokens[2],12));
+                    outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
+                    codeaddress += 4; 
                   }
                   else if(inst=="SB")
                         {
-                           SBformat(tokens[0], registers[tokens[2]],registers[tokens[1]], hex2bin(tokens[1]));
+                          machinecode =  SBformat(tokens[0], registers[tokens[2]],registers[tokens[1]], hex2bin(tokens[1],12));
+                          outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
+                          codeaddress += 4; 
                         }
                         else if(inst=="U")
                               {
-                                 Uformat(tokens[0], hex2bin(tokens[2]),registers[tokens[1]]);
+                                machinecode =  Uformat(tokens[0], hex2bin(tokens[2],20),registers[tokens[1]]);
+                                 outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
+                                 codeaddress += 4; 
                               }
                               else if(inst=="UJ")
                                     {
                                        
-                                       UJformat(tokens[0], hex2bin(tokens[2]),registers[tokens[1]]);
+                                     machinecode=   UJformat(tokens[0], hex2bin(tokens[2],20),registers[tokens[1]]);
+                                     outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
+                                      codeaddress += 4; 
                                     }
                                     else
                                     {break;}
