@@ -317,14 +317,14 @@ void assemble(string inputf, string outputf) //Function to take input and write 
                         }
                         else if(inst=="U")
                               {
-                                machinecode =  Uformat(tokens[0], hex2bin(tokens[2],20),registers[tokens[1]]);
+                                machinecode =  Uformat(tokens[0], dec2bin(tokens[2],20),registers[tokens[1]]);
                                  outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
                                  codeaddress += 4; 
                               }
                               else if(inst=="UJ")
                                     {
                                        
-                                     machinecode=   UJformat(tokens[0], hex2bin(tokens[2],20),registers[tokens[1]]);
+                                     machinecode=   UJformat(tokens[0], dec2bin(tokens[2],20),registers[tokens[1]]);
                                      outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
                                       codeaddress += 4; 
                                     }
