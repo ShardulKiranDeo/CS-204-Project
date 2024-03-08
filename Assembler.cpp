@@ -165,11 +165,45 @@ int power(int a){
   }
   return 10*power(a-1);
 }
+string onesComplement(string &bin){
+  string result;
+  int l = bin.length();
+  int i=0;
+  while(i<l){
+    if(bin[i]=='0')
+      result += '1';
+    else  
+      result += '0';
+  i++;
+  }
+  return result;
+}
+string twosComplement(string &bin){
+  string onesComp = onesComplement(bin);
+  int carry = 1;
+   for(int i=onesComp.size()-1;i>=0;--i){ 
+    if(onesComp[i] == '0' && carry ==1){
+      onesComp[i] = '1';
+      carry = 0;
+    }else if(onesComp[i] == '1' && carry ==1){
+      onesComp[i] = '0';
+    }
+    else
+      continue;
+   }
+   return onesComp;
+}
 
 string dec2bin(string &h,int l){
   string a;
-  int i=0;
+  int i=0;int flag = 0;
   int sum = 0;
+  if(h[0] == '-'){
+    h.erase(0,1);
+    l=l-1;
+    flag++;
+  }
+
   while(i<l){
     char a = h[l-i-1];
     int b = a-'0';
@@ -183,8 +217,13 @@ string dec2bin(string &h,int l){
     a += c;
   }
  reverse(a.begin(),a.end());
-return a;
+if(flag == 0){
+  return a;
 }
+else{
+  return twosComplement(a);
+}
+} 
 
 string bintohex(string &s){
   bitset<32>bintohex(s);
