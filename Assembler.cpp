@@ -377,7 +377,7 @@ void assemble(string inputf, string outputf) //Function to take input and write 
                   }
                   else if(inst=="SB")
                         {
-                          machinecode =  SBformat(tokens[0], registers[tokens[2]],registers[tokens[1]], dec2bin(tokens[1],12));
+                          machinecode =  SBformat(tokens[0], registers[tokens[2]],registers[tokens[1]], dec2bin(tokens[3],12));
                           outfile <<"0x"<<hex<<codeaddress<< " "<<machinecode<<endl;
                           codeaddress += 4; 
                         }
