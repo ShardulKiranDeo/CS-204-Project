@@ -268,7 +268,7 @@ string dec2bin_20(string &a, int l)
 
 string dec2bin_12(string &a, int l)
 {
-    
+
     long long temp_tfg = stoll(a);
     bitset<12> tfg(temp_tfg);
     string result_tfg = "";
@@ -439,7 +439,7 @@ string Iformat(string instruction, string immediate, string rs1, string rd) // F
     bin = bin + funct3[instruction];
     bin = bin + rd;
     bin = bin + opcode[instruction];
-  
+
     string hex = bintohex8(bin);
     return hex;
 }
@@ -498,140 +498,196 @@ string UJformat(string instruction, string immediate, string rd) // For UJ forma
 
 int check(string instruction)
 {
- 
-    
-regex lw(R"(^([Ll][Ww]\s+x\d{1,2}\s+\d+\s+x\d{1,2})|([Ll][Ww]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\))|([Ll][Ww]\s+x\d{1,2}\s+\w+)$)");  
-// cout<<regex_match(instruction, lw);
-if(regex_match(instruction, lw))
-{ return 1; }
-regex addi(R"(^[Aa][Dd][Dd][Ii]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$)");
-if(regex_match(instruction, addi))
-{ return 1; }
-regex andi(R"(^[Aa][Nn][Dd][Ii]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$)");
-if(regex_match(instruction, andi))
-{ return 1; }
 
-regex ori(R"(^[Oo][Rr][Ii]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$)");
-if(regex_match(instruction, ori))
-{ return 1; }
+    regex lw(R"(^([Ll][Ww]\s+x\d{1,2}\s+\d+\s+x\d{1,2})|([Ll][Ww]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\))|([Ll][Ww]\s+x\d{1,2}\s+\w+)$)");
+    // cout<<regex_match(instruction, lw);
+    if (regex_match(instruction, lw))
+    {
+        return 1;
+    }
+    regex addi(R"(^[Aa][Dd][Dd][Ii]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$)");
+    if (regex_match(instruction, addi))
+    {
+        return 1;
+    }
+    regex andi(R"(^[Aa][Nn][Dd][Ii]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$)");
+    if (regex_match(instruction, andi))
+    {
+        return 1;
+    }
 
-regex lb(R"(^[Ll][Bb]\s+x\d{1,2}\s+\d{1}\s*\(\s*x\d{1,2}\s*\)|[Ll][bB]\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, lb))
-{ return 1; }
+    regex ori(R"(^[Oo][Rr][Ii]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$)");
+    if (regex_match(instruction, ori))
+    {
+        return 1;
+    }
 
-regex ld(R"(^[Ll][Dd]\s+x\d{1,2}\s+\d{1}\s*\(\s*x\d{1,2}\s*\)|[Ll][Dd]\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, ld))
-{ return 1; }
+    regex lb(R"(^[Ll][Bb]\s+x\d{1,2}\s+\d{1}\s*\(\s*x\d{1,2}\s*\)|[Ll][bB]\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, lb))
+    {
+        return 1;
+    }
 
-regex lh(R"(^[Ll][Hh]\s+x\d{1,2}\s+\d{1}\s*\(\s*x\d{1,2}\s*\)|[Ll][Hh]\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, lh))
-{ return 1; }
+    regex ld(R"(^[Ll][Dd]\s+x\d{1,2}\s+\d{1}\s*\(\s*x\d{1,2}\s*\)|[Ll][Dd]\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, ld))
+    {
+        return 1;
+    }
 
-//sb format
-regex beq(R"(^[Bb][Ee][Qq]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
-// cout<<regex_match(instruction, beq);
-if(regex_match(instruction, beq))
-{ return 1; }
+    regex lh(R"(^[Ll][Hh]\s+x\d{1,2}\s+\d{1}\s*\(\s*x\d{1,2}\s*\)|[Ll][Hh]\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, lh))
+    {
+        return 1;
+    }
 
-regex bne(R"(^[Bb][nN][Ee]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, bne))
-{ return 1; }
+    // sb format
+    regex beq(R"(^[Bb][Ee][Qq]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
+    // cout<<regex_match(instruction, beq);
+    if (regex_match(instruction, beq))
+    {
+        return 1;
+    }
 
-regex bge(R"(^[Bb][Gg][Ee]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, bge))
-{ return 1; }
+    regex bne(R"(^[Bb][nN][Ee]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, bne))
+    {
+        return 1;
+    }
 
-regex blt(R"(^[Bb][Ll][Tt]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, blt))
-{ return 1; }
+    regex bge(R"(^[Bb][Gg][Ee]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, bge))
+    {
+        return 1;
+    }
 
-regex auipc(R"(^[aA][Uu][Ii][Pp][Cc]\s+x\d{1,2}\s+\d+$)");
-if(regex_match(instruction, auipc))
-{ return 1; }
+    regex blt(R"(^[Bb][Ll][Tt]\s+x\d{1,2}\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, blt))
+    {
+        return 1;
+    }
 
-regex lui(R"(^[Ll][Uu][iI]\s+x\d{1,2}\s+\d+$)");
-if(regex_match(instruction, lui))
-{ return 1; }
+    regex auipc(R"(^[aA][Uu][Ii][Pp][Cc]\s+x\d{1,2}\s+\d+$)");
+    if (regex_match(instruction, auipc))
+    {
+        return 1;
+    }
 
-regex add(R"(^[Aa][Dd][Dd]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, add))
-{ return 1; }
-// cout<<instruction<<endl;
-regex andf(R"(^[Aa][Nn][Dd]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, andf))
-{ return 1; }
+    regex lui(R"(^[Ll][Uu][iI]\s+x\d{1,2}\s+\d+$)");
+    if (regex_match(instruction, lui))
+    {
+        return 1;
+    }
 
-regex orf(R"(^[Oo][Rr]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, orf))
-{ return 1; }
+    regex add(R"(^[Aa][Dd][Dd]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, add))
+    {
+        return 1;
+    }
+    // cout<<instruction<<endl;
+    regex andf(R"(^[Aa][Nn][Dd]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, andf))
+    {
+        return 1;
+    }
 
-regex sll(R"(^[Ss][Ll][Ll]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, sll))
-{ return 1; }
+    regex orf(R"(^[Oo][Rr]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, orf))
+    {
+        return 1;
+    }
 
-regex slt(R"(^[Ss][Ll][Tt]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, slt))
-{ return 1; }
+    regex sll(R"(^[Ss][Ll][Ll]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, sll))
+    {
+        return 1;
+    }
 
-regex sra(R"(^[Ss][Rr][Aa]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, sra))
-{ return 1; }
+    regex slt(R"(^[Ss][Ll][Tt]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, slt))
+    {
+        return 1;
+    }
 
-regex srl(R"(^[Ss][Rr][Ll]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, srl))
-{ return 1; }
+    regex sra(R"(^[Ss][Rr][Aa]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, sra))
+    {
+        return 1;
+    }
 
-regex subf(R"(^[Ss][Uu][Bb]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, subf))
-{ return 1; }
+    regex srl(R"(^[Ss][Rr][Ll]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, srl))
+    {
+        return 1;
+    }
 
-regex xorf(R"(^[Xx][Oo][Rr]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, xorf))
-{ return 1; }
+    regex subf(R"(^[Ss][Uu][Bb]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, subf))
+    {
+        return 1;
+    }
 
-regex mul(R"(^[Mm][Uu][Ll]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, mul))
-{ return 1; }
+    regex xorf(R"(^[Xx][Oo][Rr]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, xorf))
+    {
+        return 1;
+    }
 
-regex div(R"(^[Dd][Ii][Vv]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, div))
-{ return 1; }
+    regex mul(R"(^[Mm][Uu][Ll]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, mul))
+    {
+        return 1;
+    }
 
-regex rem(R"(^[Rr][Ee][Mm]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
-if(regex_match(instruction, rem))
-{ return 1; }
+    regex div(R"(^[Dd][Ii][Vv]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, div))
+    {
+        return 1;
+    }
 
-regex jal(R"(^[jJ][Aa][Ll]\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, jal))
-{ return 1; }
+    regex rem(R"(^[Rr][Ee][Mm]\s+x\d{1,2}\s+x\d{1,2}\s+x\d{1,2}$)");
+    if (regex_match(instruction, rem))
+    {
+        return 1;
+    }
 
-regex jalr(R"(^[jJ][Aa][Ll][Rr]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$|[jJ][Aa][Ll][Rr]\s+x\d{1,2}\s+\w+$)");
-if(regex_match(instruction, jalr))
-{ return 1; }
+    regex jal(R"(^[jJ][Aa][Ll]\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, jal))
+    {
+        return 1;
+    }
 
+    regex jalr(R"(^[jJ][Aa][Ll][Rr]\s+x\d{1,2}\s+x\d{1,2}\s+\d+$|[jJ][Aa][Ll][Rr]\s+x\d{1,2}\s+\w+$)");
+    if (regex_match(instruction, jalr))
+    {
+        return 1;
+    }
 
-regex sb(R"(^[Ss][Ww]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][wW]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
-if(regex_match(instruction, sb))
-{ return 1; }
+    regex sb(R"(^[Ss][Ww]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][wW]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
+    if (regex_match(instruction, sb))
+    {
+        return 1;
+    }
 
-regex sw(R"(^[Ss][Ww]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][wW]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
-if(regex_match(instruction, sw))
-{ return 1; }
+    regex sw(R"(^[Ss][Ww]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][wW]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
+    if (regex_match(instruction, sw))
+    {
+        return 1;
+    }
 
-regex sd(R"(^[Ss][Dd]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][Dd]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
-if(regex_match(instruction, sd))
-{ return 1; }
+    regex sd(R"(^[Ss][Dd]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][Dd]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
+    if (regex_match(instruction, sd))
+    {
+        return 1;
+    }
 
-regex sh(R"(sh = ^[Ss][Hh]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][Hh]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
-if(regex_match(instruction, sh))
-{ return 1; }
+    regex sh(R"(sh = ^[Ss][Hh]\s+x\d{1,2}\s+\d+\s*\(\s*x\d{1,2}\s*\)|[Ss][Hh]\s+x\d{1,2}\s+\d+\s+x\d{1,2}$)");
+    if (regex_match(instruction, sh))
+    {
+        return 1;
+    }
 
-
-
-
-return -1;
+    return -1;
 }
-
 
 void assemble(string inputf, string outputf) // Function to take input and write into the output file
 {
@@ -721,10 +777,11 @@ void assemble(string inputf, string outputf) // Function to take input and write
                         token = ".data";
                         break;
                     }
-                       int ch = check(line);
-                    if(ch==-1)
-                  {cout<<"Syntax Error"<<endl;
-                  }
+                    int ch = check(line);
+                    if (ch == -1)
+                    {
+                        cout << "Syntax Error" << endl;
+                    }
 
                     string inst = ins_type[tokens[0]];
                     string machinecode;
@@ -758,8 +815,9 @@ void assemble(string inputf, string outputf) // Function to take input and write
                                 {
                                     string label_upto = temp_iter->first;
                                     long long insyt = label_ins_num[label_upto];
-                                    insyt++;
-                                    insyt = instruction_counter_i * 4;
+                                    
+                                    
+                                    insyt = insyt * 4;
                                     string hg = to_string(insyt);
                                     machinecode = Iformat(tokens[0], dec2bin_12(hg, 12), registers[tokens[2]], registers[tokens[1]]);
                                     // if (label_ln == line_number)
@@ -1002,8 +1060,8 @@ void assemble(string inputf, string outputf) // Function to take input and write
                     // Decode the instructions
                 }
             }
-            outfile<<endl;
-            outfile<<"Section ended ------"<<endl;
+            outfile << endl;
+            outfile << "Section ended ------" << endl;
 
             if (token == ".data") // Writing to the output file in big endian format
             {
@@ -1213,9 +1271,9 @@ void assemble(string inputf, string outputf) // Function to take input and write
                     }
                 }
             }
-            outfile<<endl;
-            outfile<<"Section ended ------"<<endl;
-            outfile<<endl;
+            outfile << endl;
+            outfile << "Section ended ------" << endl;
+            outfile << endl;
             if (token == ".text")
             {
                 // cout << "ghello" << endl;
@@ -1297,8 +1355,10 @@ void assemble(string inputf, string outputf) // Function to take input and write
                                 {
                                     string label_upto = temp_iter->first;
                                     long long insyt = label_ins_num[label_upto];
-                                    insyt++;
-                                    insyt = instruction_counter_i * 4;
+                                    
+                                    
+                                    insyt = insyt * 4;
+                                    // cout<<insyt<<endl;
                                     string hg = to_string(insyt);
                                     machinecode = Iformat(tokens[0], dec2bin_12(hg, 12), registers[tokens[2]], registers[tokens[1]]);
 
@@ -1543,14 +1603,15 @@ void assemble(string inputf, string outputf) // Function to take input and write
                 }
             }
 
-            outfile<<endl;
-            outfile<<"Section ended ------"<<endl;
+            outfile << endl;
+            outfile << "Section ended ------" << endl;
         }
     }
 }
 
 void assemble_loader(string inputf, string outputf) // Function to take input and write into the output file
 {
+    long long madhu_count = 0;
     ifstream infile(inputf);
     ofstream outfile(outputf);
 
@@ -1577,7 +1638,7 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
             continue;
         }
         line_number2++;
-
+       
         if (line[0] == '.')
         {
             istringstream iss(line);
@@ -1585,7 +1646,7 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
             iss >> token;
             if (token == ".text")
             {
-                long long madhu_count = 0;
+                
                 while (getline(infile, line))
                 {
 
@@ -1647,7 +1708,7 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
                     else if (inst == "I")
                     {
 
-                        //cout << tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << tokens[3] << endl;
+                        cout << tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << tokens[3] << endl;
 
                         size_t colonPos = line.find('(');
                         // cout << "shardul" << endl;
@@ -2127,7 +2188,8 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
                 long long y_ins_num = 0;
                 while (getline(infile, line))
                 {
-                    long long madhu_count =0;
+                    
+
                     line = regex_replace(line, regex("^\\s+|\\s+$"), ""); // Removing spaces leading or trailing
                     line = regex_replace(line, regex(","), " ");          // Removing commas
 
@@ -2298,7 +2360,7 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
                                 // cout << machinecode << endl;
                             }
                         }
-                         madhu_count++;
+                        madhu_count++;
                         outfile << "0x" << hex << uppercase << codeaddress << " " << machinecode << endl;
                         codeaddress += 4;
                     }
@@ -2452,7 +2514,7 @@ int main()
     assemble_loader("input.asm", "output.mc");
     assemble("input.asm", "output.mc");
 
-    for (auto it = ud_labels.begin(); it != ud_labels.end(); it++)
+    for (auto it = label_ins_num.begin(); it != label_ins_num.end(); it++)
     {
         // cout << it->first << "  " << it->second << endl;
     }
