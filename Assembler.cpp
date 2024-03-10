@@ -815,8 +815,7 @@ void assemble(string inputf, string outputf) // Function to take input and write
                                 {
                                     string label_upto = temp_iter->first;
                                     long long insyt = label_ins_num[label_upto];
-                                    
-                                    
+
                                     insyt = insyt * 4;
                                     string hg = to_string(insyt);
                                     machinecode = Iformat(tokens[0], dec2bin_12(hg, 12), registers[tokens[2]], registers[tokens[1]]);
@@ -1325,6 +1324,11 @@ void assemble(string inputf, string outputf) // Function to take input and write
                         token = ".data";
                         break;
                     }
+                    int ch = check(line);
+                    if (ch == -1)
+                    {
+                        cout << "Syntax Error" << endl;
+                    }
 
                     string inst = ins_type[tokens[0]];
                     string machinecode;
@@ -1355,8 +1359,7 @@ void assemble(string inputf, string outputf) // Function to take input and write
                                 {
                                     string label_upto = temp_iter->first;
                                     long long insyt = label_ins_num[label_upto];
-                                    
-                                    
+
                                     insyt = insyt * 4;
                                     // cout<<insyt<<endl;
                                     string hg = to_string(insyt);
@@ -1638,7 +1641,7 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
             continue;
         }
         line_number2++;
-       
+
         if (line[0] == '.')
         {
             istringstream iss(line);
@@ -1646,7 +1649,7 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
             iss >> token;
             if (token == ".text")
             {
-                
+
                 while (getline(infile, line))
                 {
 
@@ -2188,7 +2191,6 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
                 long long y_ins_num = 0;
                 while (getline(infile, line))
                 {
-                    
 
                     line = regex_replace(line, regex("^\\s+|\\s+$"), ""); // Removing spaces leading or trailing
                     line = regex_replace(line, regex(","), " ");          // Removing commas
