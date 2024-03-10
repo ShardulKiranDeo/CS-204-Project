@@ -10,6 +10,7 @@ Before providing the assembly code, ensure the following prerequisites are met:
 # Including the ".text" segment is mandatory.
 # Use space as a delimiter to separate operands; do not use commas.
 # Comments are allowed and should start with a hashtag #.
+# We are presuming registers from x0 - x31, no other namings like sp, ra are allowed.
 
 *********************************************************************************************************************
 ~ Supported Instructions
@@ -44,15 +45,15 @@ The format to enter the instructions is as follows:
 
 For R Format: add x1 x2 x3
 For I Format: addi x2 x3 100
-For Load Instructions: lb x4 0(x9)
+For Load Instructions: lb x4 0(x9)  Or lb x4 0 x9
 For Jump and Link Register (Jalr): jalr x1 x3 100
-For Branch Instructions: beq x1 x2 label_name
+For Branch Instructions: beq x1 x2 label_name Or beq x1 x2 100
 For AUIPC: auipc x4 100
 For Jump and Link (Jal): jal x1 100
 
 *************************************************************************************************************************
 
-Credits goes to
+Team-
 & Prakhar Maurya
 & Shardul Kiran Deo
 & Siripurapu Madhu sudhana Rao
