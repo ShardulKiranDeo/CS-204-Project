@@ -1647,7 +1647,7 @@ void assemble_loader(string inputf, string outputf) // Function to take input an
                     else if (inst == "I")
                     {
 
-                        cout << tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << tokens[3] << endl;
+                        //cout << tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << tokens[3] << endl;
 
                         size_t colonPos = line.find('(');
                         // cout << "shardul" << endl;
